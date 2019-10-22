@@ -41,10 +41,8 @@ use std::fs::OpenOptions;
 use std::io::Error;
 use std::os::unix::io::AsRawFd;
 
-extern "C" {
-    fn c_lock(fd: i32, is_blocking: i32, is_writeable: i32) -> c_int;
-    fn c_unlock(fd: i32) -> c_int;
-}
+mod file_lock;
+use file_lock::{c_lock, c_unlock};
 
 /// Represents the actually locked file
 #[derive(Debug)]
@@ -95,9 +93,7 @@ impl FileLock {
         match file {
             Err(err) => Err(err),
             Ok(file) => {
-                let errno = unsafe {
-                    c_lock(file.as_raw_fd(), is_blocking as i32, is_writable as i32)
-                };
+                let errno = c_lock(file.as_raw_fd(), is_blocking as c_int, is_writable as c_int);
 
                 match errno {
                     0 => Ok(FileLock { file }),
@@ -138,9 +134,7 @@ impl FileLock {
     ///```
     ///
     pub fn unlock(&self) -> Result<(), Error> {
-        let errno = unsafe {
-            c_unlock(self.file.as_raw_fd())
-        };
+        let errno = c_unlock(self.file.as_raw_fd());
 
         match errno {
             0 => Ok(()),

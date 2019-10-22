@@ -10,8 +10,6 @@ homepage      = "https://crates.io/crates/file-lock"
 repository    = "https://gitlab.com/alfiedotwtf/file-lock"
 readme        = "README.md"
 
-build   = "build.rs"
-
 [dependencies]
 libc   = "0.2.42"
 mktemp = "0.3.1"
