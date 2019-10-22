@@ -145,7 +145,7 @@ impl FileLock {
 
 impl Drop for FileLock {
     fn drop(&mut self) {
-        self.unlock().is_ok();
+        let _ = self.unlock();
     }
 }
 
@@ -174,16 +174,15 @@ mod test {
                                 continue;
                             }
 
-                            remove_file(&filename).is_ok();
+                            let _= remove_file(&filename);
 
                             let parent_lock = match *already_exists {
                                 false => None,
                                 true  => {
-                                    OpenOptions::new()
+                                    let _ = OpenOptions::new()
                                         .write(true)
                                         .create(true)
-                                        .open(&filename)
-                                        .is_ok();
+                                        .open(&filename);
 
                                     match *already_locked {
                                         false => None,
@@ -200,7 +199,7 @@ mod test {
                                     sleep(Duration::from_millis(150));
 
                                     match parent_lock {
-                                        Some(lock) => { lock.unlock().is_ok(); },
+                                        Some(lock) => { let _ = lock.unlock(); },
                                         None       => {},
                                     }
 
@@ -267,7 +266,7 @@ mod test {
                                 }
                             }
 
-                            remove_file(&filename).is_ok();
+                            let _ = remove_file(&filename);
                         }
                     }
                 }
