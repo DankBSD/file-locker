@@ -14,6 +14,3 @@ readme        = "README.md"
 libc   = "0.2.42"
 mktemp = "0.3.1"
 nix    = "0.11.0"
-
-[build-dependencies]
-gcc = "0.3.54"
