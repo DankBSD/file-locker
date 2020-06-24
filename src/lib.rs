@@ -33,6 +33,7 @@
 //! ```
 
 extern crate libc;
+#[cfg(test)]
 extern crate nix;
 
 use libc::c_int;
@@ -274,3 +275,4 @@ mod test {
         }
     }
 }
+
