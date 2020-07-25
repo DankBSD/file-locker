@@ -2,4 +2,4 @@
 
 cargo bump $2
 git add Cargo.toml
-git commit -sm "Bump version to $2"
+git commit -sm "Bump version to $2" || true
