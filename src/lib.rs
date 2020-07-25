@@ -41,6 +41,7 @@ use std::fs::File;
 use std::fs::OpenOptions;
 use std::io::Error;
 use std::os::unix::io::AsRawFd;
+use std::path::Path;
 
 mod file_lock;
 use file_lock::{c_lock, c_unlock};
@@ -84,7 +85,7 @@ impl FileLock {
     ///}
     ///```
     ///
-    pub fn lock(filename: &str, is_blocking: bool, is_writable: bool) -> Result<FileLock, Error> {
+    pub fn lock<T: AsRef<Path>>(filename: T, is_blocking: bool, is_writable: bool) -> Result<FileLock, Error> {
         let file = OpenOptions::new()
             .read(!is_writable)
             .write(is_writable)
