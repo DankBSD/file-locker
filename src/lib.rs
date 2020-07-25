@@ -35,8 +35,11 @@ use nix::{
 };
 use std::{
     fs::{File, OpenOptions},
-    io::{Error, ErrorKind, Result},
-    os::unix::io::AsRawFd,
+    io::{prelude::*, Error, ErrorKind, IoSlice, IoSliceMut, Result, SeekFrom},
+    os::unix::{
+        fs::FileExt,
+        io::{AsRawFd, RawFd},
+    },
     path::Path,
 };
 
@@ -172,6 +175,52 @@ impl FileLock {
         fcntl(self.file.as_raw_fd(), FcntlArg::F_SETLK(&flock))
             .map_err(cver)?;
         Ok(())
+    }
+}
+
+impl Read for FileLock {
+    fn read(&mut self, buf: &mut [u8]) -> Result<usize> {
+        self.file.read(buf)
+    }
+
+    fn read_vectored(&mut self, bufs: &mut [IoSliceMut]) -> Result<usize> {
+        self.file.read_vectored(bufs)
+    }
+}
+
+impl Write for FileLock {
+    fn write(&mut self, buf: &[u8]) -> Result<usize> {
+        self.file.write(buf)
+    }
+
+    fn flush(&mut self) -> Result<()> {
+        self.file.flush()
+    }
+
+    fn write_vectored(&mut self, bufs: &[IoSlice]) -> Result<usize> {
+        self.file.write_vectored(bufs)
+    }
+}
+
+impl Seek for FileLock {
+    fn seek(&mut self, pos: SeekFrom) -> Result<u64> {
+        self.file.seek(pos)
+    }
+}
+
+impl AsRawFd for FileLock {
+    fn as_raw_fd(&self) -> RawFd {
+        self.file.as_raw_fd()
+    }
+}
+
+impl FileExt for FileLock {
+    fn read_at(&self, buf: &mut [u8], offset: u64) -> Result<usize> {
+        self.file.read_at(buf, offset)
+    }
+
+    fn write_at(&self, buf: &[u8], offset: u64) -> Result<usize> {
+        self.file.write_at(buf, offset)
     }
 }
 
