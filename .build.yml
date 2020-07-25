@@ -1,0 +1,13 @@
+image: alpine/edge
+packages:
+  - rust
+  - cargo
+sources:
+  - https://git.sr.ht/~zethra/file-locker
+tasks:
+  - build: |
+      cd file-locker
+      cargo build --all-features
+  - test: |
+      cd file-locker
+      cargo test --all-features
