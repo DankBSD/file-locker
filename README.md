@@ -1,99 +1,60 @@
-# NAME
+# file-locker
 
-file-lock - File locking via POSIX advisory record locks
+File locking via POSIX advisory record locks
+(fork of [file-lock](https://gitlab.com/alfiedotwtf/file-lock))
 
 This crate provides the facility to lock and unlock a file following the
 advisory record lock scheme as specified by UNIX IEEE Std 1003.1-2001 (POSIX.1)
 via fcntl().
 
-# USAGE
-
-    extern crate file_lock;
+## USAGE
 
     use file_lock::FileLock;
     use std::io::prelude::*;
+	use std::io::Result;
 
-    fn main() {
-        let should_we_block  = true;
-        let lock_for_writing = true;
+    fn main() -> Result<()> {
+		let filelock = FileLock::new("myfile.txt")
+						.writeable(true)
+						.blocking(true)
+						.lock()?;
 
-        let mut filelock = match FileLock::lock("myfile.txt", should_we_block, lock_for_writing) {
-            Ok(lock) => lock,
-            Err(err) => panic!("Error getting write lock: {}", err),
-        };
-
-        filelock.file.write_all(b"Hello, World!").is_ok();
+        filelock.file.write_all(b"Hello, World!")?;
 
         // Manually unlocking is optional as we unlock on Drop
         filelock.unlock();
     }
 
-# DOCUMENTATION
+## DOCUMENTATION
 
-* [https://docs.rs/file-lock/](https://docs.rs/file-lock/)
+* [https://docs.rs/file-locker/](https://docs.rs/file-locker/)
 
-# SUPPORT
+## SUPPORT
 
-Please report any bugs or feature requests at:
+Please report any bugs at:
 
-* [https://gitlab.com/alfiedotwtf/file-lock/issues](https://gitlab.com/alfiedotwtf/file-lock/issues)
+* [https://todo.sr.ht/~zethra/file-locker](https://todo.sr.ht/~zethra/file-locker)
 
-Feel free to fork the repository and submit pull requests :)
+Or by email at:
 
-# DEPENDENCIES
+* [~zethra/public-inbox@lists.sr.ht](mailto:~zethra/public-inbox@lists.sr.ht)
 
-* [gcc](https://gcc.gnu.org/)
+## AUTHORS
 
-# SEE ALSO
-
-* [Lock, Stock and Two Smoking Barrels](http://www.imdb.com/title/tt0120735/)
-
-# AUTHORS
+[Ben Goldberg](https://benaaron.dev) &lt;[benaagoldberg@gmail.com](mailto:benaagoldberg@gmail.com)&gt;
 
 [Alfie John](https://www.alfie.wtf) &lt;[alfie@alfie.wtf](mailto:alfie@alfie.wtf)&gt;
 
 [Sebastian Thiel](http://byronimo.de) &lt;[byronimo@gmail.com](mailto:byronimo@gmail.com)&gt;
 
-# WARRANTY
-
-IT COMES WITHOUT WARRANTY OF ANY KIND.
-
-# COPYRIGHT AND LICENSE
-
-MIT License
-
-Perpetual Copyright (c) Alfie John
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of
-this software and associated documentation files (the "Software"), to deal in
-the Software without restriction, including without limitation the rights to
-use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
-of the Software, and to permit persons to whom the Software is furnished to do
-so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-
-## License
-
-Licensed under either of
-
- * Apache License, Version 2.0, ([LICENSE-APACHE](LICENSE-APACHE) or http://www.apache.org/licenses/LICENSE-2.0)
- * MIT license ([LICENSE-MIT](LICENSE-MIT) or http://opensource.org/licenses/MIT)
-
-at your option.
-
 ## Contribution
 
+Contribution welcome!
+
+Please send any patches to [~zethra/public-inbox@lists.sr.ht](mailto:~zethra/public-inbox@lists.sr.ht)
+
+If you need help sending a patch over email please see [this guide](https://git-send-email.io/)
+
 Unless you explicitly state otherwise, any contribution intentionally
-submitted for inclusion in the work by you, as defined in the Apache-2.0
-license, shall be dual licensed as above, without any additional terms or
-conditions.
+submitted for inclusion in the work by you, shall be licensed under the
+MIT license, without any additional terms or conditions.
