@@ -8,9 +8,9 @@ edition     = "2018"
 
 documentation = "http://docs.rs/file-locker/"
 homepage      = "https://crates.io/crates/file-locker"
-#repository    = "https://gitlab.com/alfiedotwtf/file-locker"
+repository    = "https://sr.ht/~zethra/file-locker/"
 readme        = "README.md"
-include = ["src/lib.rs", "LICENSE", "README.md"]
+include       = ["src/lib.rs", "LICENSE", "README.md"]
 
 [dependencies]
 nix = "0.17.0"
