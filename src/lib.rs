@@ -130,6 +130,8 @@ impl FileLock {
             l_start: 0,
             l_len: 0,
             l_pid: 0,
+            #[cfg(target_os = "freebsd")]
+            l_sysid: 0,
         };
         let arg = if blocking {
             FcntlArg::F_SETLKW(&flock)
@@ -171,6 +173,8 @@ impl FileLock {
             l_start: 0,
             l_len: 0,
             l_pid: 0,
+            #[cfg(target_os = "freebsd")]
+            l_sysid: 0,
         };
         fcntl(self.file.as_raw_fd(), FcntlArg::F_SETLK(&flock))
             .map_err(cver)?;
