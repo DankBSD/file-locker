@@ -7,7 +7,7 @@ This crate provides the facility to lock and unlock a file following the
 advisory record lock scheme as specified by UNIX IEEE Std 1003.1-2001 (POSIX.1)
 via fcntl().
 
-Thid crate currently supports Linux and FreeBSD.
+This crate currently supports Linux and FreeBSD.
 
 ## USAGE
 
