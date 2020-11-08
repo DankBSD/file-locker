@@ -11,21 +11,23 @@ This crate currently supports Linux and FreeBSD.
 
 ## USAGE
 
-    use file_lock::FileLock;
-    use std::io::prelude::*;
-	use std::io::Result;
+```rust
+use file_lock::FileLock;
+use std::io::prelude::*;
+use std::io::Result;
 
-    fn main() -> Result<()> {
-		let filelock = FileLock::new("myfile.txt")
-						.writeable(true)
-						.blocking(true)
-						.lock()?;
+fn main() -> Result<()> {
+    let filelock = FileLock::new("myfile.txt")
+                    .writeable(true)
+                    .blocking(true)
+                    .lock()?;
 
-        filelock.file.write_all(b"Hello, World!")?;
+    filelock.file.write_all(b"Hello, World!")?;
 
-        // Manually unlocking is optional as we unlock on Drop
-        filelock.unlock();
-    }
+    // Manually unlocking is optional as we unlock on Drop
+    filelock.unlock();
+}
+```
 
 ## DOCUMENTATION
 

@@ -1,10 +1,12 @@
 [package]
 name        = "file-locker"
 version     = "1.0.4"
-authors     = ["Ben Goldberg <benaagoldberg@gmail.com>", "Alfie John <alfie@alfie.wtf>", "Sebastian Thiel <byronimo@gmail.com>"]
+authors     = ["Ben Aaron Goldberg <ben@benaaron.dev>", "Alfie John <alfie@alfie.wtf>", "Sebastian Thiel <byronimo@gmail.com>"]
 description = "File locking via POSIX advisory record locks"
 license     = "MIT"
 edition     = "2018"
+categories  = ["os", "os::unix-apis"]
+keywords    = ["linux"]
 
 documentation = "http://docs.rs/file-locker/"
 homepage      = "https://crates.io/crates/file-locker"
