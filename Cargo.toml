@@ -1,6 +1,6 @@
 [package]
 name        = "file-locker"
-version     = "1.0.4"
+version     = "1.0.5"
 authors     = ["Ben Aaron Goldberg <ben@benaaron.dev>", "Alfie John <alfie@alfie.wtf>", "Sebastian Thiel <byronimo@gmail.com>"]
 description = "File locking via POSIX advisory record locks"
 license     = "MIT"
