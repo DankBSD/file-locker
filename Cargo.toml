@@ -15,4 +15,4 @@ readme        = "README.md"
 include       = ["src/lib.rs", "LICENSE", "README.md"]
 
 [dependencies]
-nix = "0.17.0"
+nix = "0.22.0"
